@@ -13,8 +13,8 @@ app.use(cookieParser())
 
 app.use("/api/user", userRouter)
 app.use("/api/chat", chatRouter)
-app.use(notFound);
-app.use(errorHandler);
+// app.use(notFound);
+// app.use(errorHandler);
 const port = process.env.PORT || 4000
 
 connectDB().then(() => {
