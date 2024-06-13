@@ -13,8 +13,8 @@ const userRegister = asyncHandler(async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const new_password = await bcrypt.hash(password, salt)
     const RegisterUser = await User.create({
-        email: req.email,
-        name: req.name,
+        email: req.body.email,
+        name: req.body.name,
         password: new_password
     })
     res.status(201).json(new ApiResponse(200, { RegisterUser }, "Successfully Register"));
@@ -44,10 +44,26 @@ const login = asyncHandler(async (req, res) => {
     res.status(201).cookie("token", token, option).json(new ApiResponse(201, token, "Successfully Login"))
 });
 const SearchUser = asyncHandler(async (req, res) => {
-    const keyword = req.query.search ? { $or: [{ email: { $regex: req.query.search, $options: "i" } }, { name: { $regex: req.query.search, $options: "i" } }] } : {}
-    const Users = await User.find(keyword).find({ _id: { $ne: req.user._id } });
-    return res.status(200).json(new ApiResponse(200, Users, "Successfully Search User"))
-})
+    try {
+        const keyword = req.query.search
+            ? {
+                $or: [
+                    { email: { $regex: req.query.search, $options: "i" } },
+                    { name: { $regex: req.query.search, $options: "i" } },
+                ],
+            }
+            : {};
+        const Users = await User.find(keyword).find({ _id: { $ne: req.user._id } });
+        if (Users.length === 0) {
+            return res.status(404).json(new ApiResponse(404, null, "No user found"));
+        }
+        return res
+            .status(200)
+            .json(new ApiResponse(200, Users, "Successfully Search User"));
+    } catch (error) {
+        return res.status(500).json(new ApiResponse(500, null, error.message));
+    }
+});
 
 module.exports = {
     userRegister,
