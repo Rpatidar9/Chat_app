@@ -1,4 +1,4 @@
-import { Box, Button, Tooltip, Text } from '@chakra-ui/react';
+import { Box, Button, Tooltip, Text, Menu } from '@chakra-ui/react';
 import React, { useState } from 'react';
 
 const SideDrawer = () => {
@@ -26,6 +26,11 @@ const SideDrawer = () => {
                 <Text fontSize="2xl" fontFamily="Work sans">
                     Talk-A-Live
                 </Text>
+                <div>
+                    <Menu>
+
+                    </Menu>
+                </div>
             </Box>
         </>
     )
