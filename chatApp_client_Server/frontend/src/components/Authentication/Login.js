@@ -3,13 +3,11 @@ import React, { useState } from 'react'
 
 const Login = () => {
     const [show, setShow] = useState(false)
-    const [name, setName] = useState()
     const [email, setEmail] = useState()
-    const [confirmpassword, setConfirmpassword] = useState()
     const [password, setPassword] = useState()
-    const [pic, setPic] = useState()
+    const [loading, setLoading] = useState(false)
     const handleClick = () => setShow(!show)
-    const postDetails = (pics) => { };
+
     const submitHandler = () => { };
 
     return (
@@ -25,7 +23,7 @@ const Login = () => {
                     <Input
                         type={show ? 'text' : 'password'}
                         placeholder='Enter Your Password'
-                        onChange={(e) => setConfirmpassword(e.target.value)}></Input>
+                        onChange={(e) => setPassword(e.target.value)}></Input>
                     <InputRightElement width={'4.5rem'}>
                         <Button h='1.75rem' size={'sm'} onClick={handleClick}>
                             {show ? 'Hide' : "Show"}
