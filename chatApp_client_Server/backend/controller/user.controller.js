@@ -26,11 +26,11 @@ const login = asyncHandler(async (req, res) => {
     if (!email || !password) {
         throw new ApiError(400, "All field is required")
     }
-    const user = await User.findOne({ email: req.email })
+    const user = await User.findOne({ email: email })
     if (!user) {
         throw new ApiError(404, "User not found")
     }
-    user.comparePassword(password, user.password, (err, isMatch) => {
+    await user.comparePassword(password, user.password, (err, isMatch) => {
         if (err) throw err;
         if (!isMatch) {
             res.status(400).json(new ApiResponse(400, "Password is not correct", "Password is not correct"))
