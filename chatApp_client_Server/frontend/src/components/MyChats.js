@@ -15,6 +15,7 @@ const MyChats = ({ fetchAgain }) => {
   const { selectedChat, setSelectedChat, user, chats, setChats } = ChatState();
 
   const toast = useToast();
+  console.log(chats, "chats 1234");
 
   const fetchChats = async () => {
     // console.log(user._id);
@@ -25,8 +26,10 @@ const MyChats = ({ fetchAgain }) => {
         },
       };
 
-      // const { data } = await axios.get("/api/chat/fetch", config);
-      // setChats(data);
+      const { data } = await axios.get("/api/chat/fetch", config);
+      console.log(data, "data");
+
+      setChats(data);
     } catch (error) {
       toast({
         title: "Error Occured!",
@@ -87,7 +90,7 @@ const MyChats = ({ fetchAgain }) => {
         borderRadius="lg"
         overflowY="hidden"
       >
-        {chats ? (
+        {Array.isArray(chats) ? (
           <Stack overflowY="scroll">
             {chats.map((chat) => (
               <Box
@@ -119,6 +122,7 @@ const MyChats = ({ fetchAgain }) => {
         ) : (
           <ChatLoading />
         )}
+
       </Box>
     </Box>
   );
