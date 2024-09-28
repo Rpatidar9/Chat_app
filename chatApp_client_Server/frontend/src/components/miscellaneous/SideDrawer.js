@@ -77,9 +77,11 @@ function SideDrawer() {
         },
       };
 
-      const { data } = await axios.get(`/api/chat/fetch?search=${search}`, config);
+      const { data } = await axios.get(`/api/user/search?search=${search}`, config);
 
       setLoading(false);
+      console.log(data, "searrch data");;
+
       setSearchResult(data);
     } catch (error) {
       toast({
@@ -207,7 +209,7 @@ function SideDrawer() {
             {loading ? (
               <ChatLoading />
             ) : (
-              Array.isArray(searchResult) && searchResult.map((user) => (
+              Array.isArray(searchResult) && searchResult?.map((user) => (
                 <UserListItem
                   key={user._id}
                   user={user}
