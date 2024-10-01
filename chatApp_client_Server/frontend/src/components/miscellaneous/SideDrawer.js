@@ -37,10 +37,9 @@ function SideDrawer() {
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadingChat, setLoadingChat] = useState(false);
-
   const {
-    setSelectedChat,
     user,
+    setSelectedChat,
     notification,
     setNotification,
     chats,
@@ -80,9 +79,8 @@ function SideDrawer() {
       const { data } = await axios.get(`/api/user/search?search=${search}`, config);
 
       setLoading(false);
-      console.log(data, "searrch data");;
+      setSearchResult(data?.data);
 
-      setSearchResult(data);
     } catch (error) {
       toast({
         title: "Error Occured!",
@@ -94,7 +92,6 @@ function SideDrawer() {
       });
     }
   };
-
   const accessChat = async (userId) => {
     console.log(userId);
 
@@ -106,13 +103,18 @@ function SideDrawer() {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.post(`/api/chat/fetch`, { userId }, config);
+      const { data } = await axios.post(`/api/chat/access`, { userId }, config);
 
-      if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
+      if (!chats?.data?.find((c) => c._id === data._id)) {
+        setChats([data, ...(Array.isArray(chats) ? chats : [])]);
+      }
+
       setSelectedChat(data);
       setLoadingChat(false);
       onClose();
     } catch (error) {
+      console.log(error, "error");
+
       toast({
         title: "Error fetching the chat",
         description: error.message,
@@ -123,6 +125,7 @@ function SideDrawer() {
       });
     }
   };
+  console.log(chats, "loadingChat111");
 
   return (
     <>

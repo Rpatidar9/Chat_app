@@ -11,12 +11,8 @@ import { ChatState } from "../Context/ChatProvider";
 
 const MyChats = ({ fetchAgain }) => {
   const [loggedUser, setLoggedUser] = useState();
-
   const { selectedChat, setSelectedChat, user, chats, setChats } = ChatState();
-
   const toast = useToast();
-  console.log(chats, "chats 1234");
-
   const fetchChats = async () => {
     // console.log(user._id);
     try {
@@ -31,6 +27,8 @@ const MyChats = ({ fetchAgain }) => {
 
       setChats(data);
     } catch (error) {
+      console.log(error);
+
       toast({
         title: "Error Occured!",
         description: "Failed to Load the chats",

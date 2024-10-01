@@ -39,9 +39,20 @@ export const isSameUser = (messages, m, i) => {
 };
 
 export const getSender = (loggedUser, users) => {
+  if (!Array.isArray(users) || users.length < 2) {
+    // Return a fallback value if users is not a valid array or has fewer than 2 users
+    return "Unknown Sender";
+  }
   return users[0]?._id === loggedUser?._id ? users[1].name : users[0].name;
 };
 
 export const getSenderFull = (loggedUser, users) => {
+  // Check if users is a valid array and has at least 2 elements
+  if (!Array.isArray(users) || users.length < 2) {
+    console.error("Invalid users array:", users);
+    return null; // You can return null or any default value here
+  }
+
   return users[0]._id === loggedUser._id ? users[1] : users[0];
 };
+
