@@ -93,8 +93,6 @@ function SideDrawer() {
     }
   };
   const accessChat = async (userId) => {
-    console.log(userId);
-
     try {
       setLoadingChat(true);
       const config = {
@@ -108,6 +106,7 @@ function SideDrawer() {
       if (!chats?.data?.find((c) => c._id === data._id)) {
         setChats([data, ...(Array.isArray(chats) ? chats : [])]);
       }
+
 
       setSelectedChat(data);
       setLoadingChat(false);
@@ -180,8 +179,8 @@ function SideDrawer() {
               <Avatar
                 size="sm"
                 cursor="pointer"
-                name={user.name}
-                src={user.pic}
+                name={user?.name}
+                src={user?.pic}
               />
             </MenuButton>
             <MenuList>

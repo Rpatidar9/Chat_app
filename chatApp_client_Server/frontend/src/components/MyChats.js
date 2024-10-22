@@ -23,12 +23,10 @@ const MyChats = ({ fetchAgain }) => {
       };
 
       const { data } = await axios.get("/api/chat/fetch", config);
-      console.log(data, "data");
+      console.log(data, "data<1>");
 
       setChats(data);
     } catch (error) {
-      console.log(error);
-
       toast({
         title: "Error Occured!",
         description: "Failed to Load the chats",
