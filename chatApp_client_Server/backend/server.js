@@ -18,6 +18,23 @@ app.use("/api/chat", chatRouter)
 const port = process.env.PORT || 4000
 
 connectDB().then(() => {
-    app.listen(port, console.log(`server start at port ${port}`));
+    var server = app.listen(port, console.log(`server start at port ${port}`));
+    const io = require("socket.io")(server, {
+        pingTimeout: 60000,
+        cors: {
+            origin: "http://localhost:3000",
+        },
+    });
+    io.on("connection", (socket) => {
+        console.log("Connected to socket.io");
+        socket.on("setup", (userData) => {
+            socket.join(userData._id);
+            socket.emit("connected");
+        });
+    });
+    socket.on('join chat', (room) => {
+        socket.join(room)
+        console.log("User Joined Room: " + room);
+    })
 }).catch(err => console.log(err))
 

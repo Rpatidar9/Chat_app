@@ -41,7 +41,7 @@ export const isSameUser = (messages, m, i) => {
 export const getSender = (loggedUser, users) => {
   if (!Array.isArray(users) || users.length < 2) {
     // Return a fallback value if users is not a valid array or has fewer than 2 users
-    return "Unknown Sender";
+    return "Unknown Sendersssss";
   }
   return users[0]?._id === loggedUser?._id ? users[1].name : users[0].name;
 };
